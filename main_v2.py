@@ -1,6 +1,8 @@
 import datetime
 import random
 import math
+import shutil
+
 
 #assign random values to cluster centers
 c1_x=3+random.random()*5
@@ -12,7 +14,7 @@ c3_y=20 + random.random() * 5
 
 
 def fill_the_clusters():
-    global c1_x,c1_y,c2_x,c2_y,c3_x,c3_y,sensitivity
+    global c1_x,c1_y,c2_x,c2_y,c3_x,c3_y,sensitivity,iteration_count
     print('we reach fill the clusters')
     file1 = open('sampledata.txt', 'r')
     f3x = open('c1.txt', 'w')
@@ -58,6 +60,10 @@ def fill_the_clusters():
 
     # Closing files
     file1.close()
+    if iteration_count==0:
+        shutil.copyfile('c1.txt', 'c1_first.txt')
+        shutil.copyfile('c2.txt', 'c2_first.txt')
+        shutil.copyfile('c3.txt', 'c3_first.txt')
     adjust_clusters()
 
 def average_of_a_class(classfilename):
@@ -82,7 +88,23 @@ def average_of_a_class(classfilename):
     return x_avg,y_avg
 
 def adjust_clusters():
-    global c1_x,c1_y,c2_x,c2_y,c3_x,c3_y,sensitivity
+    global c1_x,c1_y,c2_x,c2_y,c3_x,c3_y,sensitivity,iteration_count
+    iteration_count+=1
+    if iteration_count == 1:
+        fc6 = open('firstscenters.txt', 'w')
+        fc6.write(str(c1_x))
+        fc6.write(';')
+        fc6.write(str(c1_y))
+        fc6.write('\n')
+        fc6.write(str(c2_x))
+        fc6.write(';')
+        fc6.write(str(c2_y))
+        fc6.write('\n')
+        fc6.write(str(c3_x))
+        fc6.write(';')
+        fc6.write(str(c3_y))
+        fc6.write('\n')
+        fc6.close()
     print('we reach fill adjust clusters')
     x_center_of_a_class,y_center_of_a_class=average_of_a_class ('c1')
     x_center_of_class1_f=float(x_center_of_a_class)
@@ -108,6 +130,8 @@ def adjust_clusters():
         y_center_of_class2_f - c2_y) + abs(x_center_of_class2_f - c2_x) + abs(x_center_of_class1_f - c1_x) + abs(
         y_center_of_class1_f - c1_y))
     fc2 = open('objective.txt', 'a')
+    fc2.write(str(iteration_count))
+    fc2.write(';')
     fc2.write(str(sum_of_center_dif))
     fc2.write('\n')
     fc2.close()
@@ -154,6 +178,20 @@ def adjust_clusters():
         fc1.write(str(abs(y_center_of_class3_f - c3_y)))
         fc1.write('\n')
         fc1.close()
+        fc5 = open('finalcenters.txt', 'w')
+        fc5.write(str(c1_x))
+        fc5.write(';')
+        fc5.write(str(c1_y))
+        fc5.write('\n')
+        fc5.write(str(c2_x))
+        fc5.write(';')
+        fc5.write(str(c2_y))
+        fc5.write('\n')
+        fc5.write(str(c3_x))
+        fc5.write(';')
+        fc5.write(str(c3_y))
+        fc5.write('\n')
+        fc5.close()
         quit()
 
 #cleaning data in the text files
@@ -171,10 +209,10 @@ f.close()
 
 f = open('iteration.txt', 'w')
 f.close()
-#cleaning complete
 
 f = open('objective.txt', 'w')
 f.close()
+#cleaning complete
 
 sensitivity=0.001 #the value is trashhold limit for determining class
 
@@ -200,12 +238,13 @@ while generator_counter<30000:
     f.write(str(y_coordinate)+'\n')  # python will convert \n to os.linesep
     f.close()
     generator_counter += 1
-
+print('random data generation complete')
 
 
 
 line_count = 0
 x_sum=0.0
 y_sum=0.0
-print('random data generation complete')
+iteration_count = 0
+
 fill_the_clusters()
