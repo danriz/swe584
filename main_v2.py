@@ -5,12 +5,12 @@ import shutil
 
 
 #assign random values to cluster centers
-c1_x=1+random.random()*25
-c1_y=1+random.random()*25
-c2_x=1 + random.random() * 25
-c2_y=1 + random.random() * 25
-c3_x=1 + random.random() * 25
-c3_y=1 + random.random() * 25
+c1_x=1+random.random()*200
+c1_y=1+random.random()*200
+c2_x=1 + random.random() * 30
+c2_y=1 + random.random() * 30
+c3_x=1 + random.random() * 100
+c3_y=1 + random.random() * 100
 
 
 def fill_the_clusters():
@@ -225,16 +225,22 @@ generator_counter=0 #counter for generating x and y coordinates.
 #creating data set with 30000 elements. it consists of 3 parts
 while generator_counter<30000:
     if generator_counter<10000:
-        x_coordinate = random.random()*-3+5+random.random()*3
-        y_coordinate = random.random()*-3+4+random.random()*3
+        r = 20 * math.sqrt(random.random())
+        theta = random.random() * 2 * math.pi
+        x_coordinate = 50 + r * math.cos(theta)
+        y_coordinate = 50 + r * math.sin(theta)
 #first part is complete
     elif  generator_counter>9999 and generator_counter<20000:
-        x_coordinate = random.random()*-3+10+random.random()*3
-        y_coordinate = random.random()*-3+9+random.random()*3
+        r = 60 * math.sqrt(random.random())
+        theta = random.random() * 2 * math.pi
+        x_coordinate = 160 + r * math.cos(theta)
+        y_coordinate = 160 + r * math.sin(theta)
 #second part is complete
     elif  generator_counter>19999 and generator_counter<30000:
-        x_coordinate = random.random()*-3+15+random.random()*3
-        y_coordinate = random.random()*-3+14+random.random()*3
+        r = 40 * math.sqrt(random.random())
+        theta = random.random() * 2 * math.pi
+        x_coordinate = 250 + r * math.cos(theta)
+        y_coordinate = 250 + r * math.sin(theta)
 #thrid part is complete
     f = open('sampledata.txt', 'a')
     f.write(str(x_coordinate))
