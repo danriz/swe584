@@ -5,12 +5,12 @@ import shutil
 
 
 #assign random values to cluster centers
-c1_x=3+random.random()*5
-c1_y=3+random.random()*5
-c2_x=11 + random.random() * 5
-c2_y=11 + random.random() * 5
-c3_x=20 + random.random() * 5
-c3_y=20 + random.random() * 5
+c1_x=1+random.random()*25
+c1_y=1+random.random()*25
+c2_x=1 + random.random() * 25
+c2_y=1 + random.random() * 25
+c3_x=1 + random.random() * 25
+c3_y=1 + random.random() * 25
 
 
 def fill_the_clusters():
@@ -83,8 +83,12 @@ def average_of_a_class(classfilename):
         y_sum+=float(y1)
     # Closing files
     file1.close()
-    x_avg=x_sum/line_count
-    y_avg=y_sum/line_count
+    if line_count==0:
+        x_avg=0
+        y_avg=0
+    else:
+        x_avg=x_sum/line_count
+        y_avg=y_sum/line_count
     return x_avg,y_avg
 
 def adjust_clusters():
@@ -221,16 +225,16 @@ generator_counter=0 #counter for generating x and y coordinates.
 #creating data set with 30000 elements. it consists of 3 parts
 while generator_counter<30000:
     if generator_counter<10000:
-        x_coordinate = 3+random.random()*5
-        y_coordinate = 3+random.random()*5
+        x_coordinate = random.random()*-3+5+random.random()*3
+        y_coordinate = random.random()*-3+4+random.random()*3
 #first part is complete
     elif  generator_counter>9999 and generator_counter<20000:
-        x_coordinate = 11 + random.random() * 5
-        y_coordinate = 11 + random.random() * 5
+        x_coordinate = random.random()*-3+10+random.random()*3
+        y_coordinate = random.random()*-3+9+random.random()*3
 #second part is complete
     elif  generator_counter>19999 and generator_counter<30000:
-        x_coordinate = 20 + random.random() * 5
-        y_coordinate = 20 + random.random() * 5
+        x_coordinate = random.random()*-3+15+random.random()*3
+        y_coordinate = random.random()*-3+14+random.random()*3
 #thrid part is complete
     f = open('sampledata.txt', 'a')
     f.write(str(x_coordinate))
@@ -242,9 +246,7 @@ print('random data generation complete')
 
 
 
-line_count = 0
-x_sum=0.0
-y_sum=0.0
+
 iteration_count = 0
 
 fill_the_clusters()
